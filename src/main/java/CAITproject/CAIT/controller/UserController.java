@@ -23,4 +23,9 @@ public class UserController {
     public String login(@RequestBody User user, HttpServletResponse response){
         return userService.verify(user, response);
     }
+
+    @PostMapping("/addUser")
+    public String addingUser(@RequestBody User user){
+        return userService.addingUser(user);
+    }
 }

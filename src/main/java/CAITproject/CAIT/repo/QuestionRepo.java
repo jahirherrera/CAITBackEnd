@@ -1,0 +1,9 @@
+package CAITproject.CAIT.repo;
+
+import CAITproject.CAIT.model.Question;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface QuestionRepo extends JpaRepository<Question, Integer> {
+}

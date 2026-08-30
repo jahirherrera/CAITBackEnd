@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -49,5 +51,21 @@ public class UserService {
 
         }
         return "failed";
+    }
+
+    public String addingUser(User user){
+        User newUser = userRepo.findByUsername(user.getUsername());
+        User userEmail = userRepo.findByEmail(user.getEmail());
+
+        if(newUser == null){
+            if(userEmail==null){
+                userRepo.save(user);
+                return "User Saved!";
+            }else{
+                return "Email already Registered";
+            }
+        }else{
+            return "Username Taken";
+        }
     }
 }

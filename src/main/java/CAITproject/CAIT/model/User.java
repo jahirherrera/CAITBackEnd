@@ -2,6 +2,9 @@ package CAITproject.CAIT.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="users")
 public class User {
@@ -9,9 +12,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(unique = true)
     private String username;
     private String password;
+    @Column(unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private List<Group> group = new ArrayList<>();
 
     public User() {
     }
@@ -20,6 +29,13 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String username, List<Group> group, String email, String password) {
+        this.username = username;
+        this.group = group;
+        this.email = email;
+        this.password = password;
     }
 
     public User(String email, String username, String password, int id) {
@@ -61,6 +77,14 @@ public class User {
         this.username = username;
     }
 
+    public List<Group> getGroup() {
+        return group;
+    }
+
+    public void setGroup(List<Group> group) {
+        this.group = group;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -68,6 +92,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", group=" + group +
                 '}';
     }
 }
