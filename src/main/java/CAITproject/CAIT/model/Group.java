@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "groups")
+@Table(name = "subject")
 public class Group {
 
     @Id
@@ -87,7 +87,7 @@ public class Group {
         return "Group{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", question=" + question +
+                ", user=" + user.getUsername() +
                 '}';
     }
 }

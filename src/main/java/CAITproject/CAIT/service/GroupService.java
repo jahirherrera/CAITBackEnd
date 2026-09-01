@@ -6,7 +6,10 @@ import CAITproject.CAIT.model.User;
 import CAITproject.CAIT.repo.GroupRepo;
 import CAITproject.CAIT.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GroupService {
@@ -27,5 +30,16 @@ public class GroupService {
         groupRepo.save(group);
 
 
+    }
+
+    public List<GroupDTO> getAllGroups(String username){
+        User user = userRepo.findByUsername(username);
+
+        if(user != null) {
+            System.out.println(user.getGroup());
+            return user.getGroup().stream().map(GroupDTO::new).toList();
+        }else{
+            throw new UsernameNotFoundException("user not found so sad");
+        }
     }
 }

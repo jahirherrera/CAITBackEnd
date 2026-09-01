@@ -33,6 +33,7 @@ public class UserService {
     }
 
     public String verify(User user, HttpServletResponse response) {
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
         if (authentication.isAuthenticated()) {
@@ -47,6 +48,7 @@ public class UserService {
 
             response.addCookie(cookie);
 
+
             return "login successful";
 
         }
@@ -56,6 +58,8 @@ public class UserService {
     public String addingUser(User user){
         User newUser = userRepo.findByUsername(user.getUsername());
         User userEmail = userRepo.findByEmail(user.getEmail());
+
+        user.setPassword(encoder.encode(user.getPassword()));
 
         if(newUser == null){
             if(userEmail==null){
