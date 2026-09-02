@@ -32,11 +32,14 @@ public class GroupService {
 
     }
 
+    public void deleting(int id){
+        groupRepo.deleteById(id);
+    }
+
     public List<GroupDTO> getAllGroups(String username){
         User user = userRepo.findByUsername(username);
 
         if(user != null) {
-            System.out.println(user.getGroup());
             return user.getGroup().stream().map(GroupDTO::new).toList();
         }else{
             throw new UsernameNotFoundException("user not found so sad");

@@ -17,10 +17,14 @@ public class GroupController {
     @Autowired
     GroupService groupService;
 
-    @PostMapping("addGroup")
+    @PostMapping("/addGroup")
     public void addingGroup(@RequestBody GroupDTO groupDTO){
         groupService.addingGroup(groupDTO);
+    }
 
+    @DeleteMapping("/groups/{id}")
+    public void deleting(@PathVariable("id")int id){
+        groupService.deleting(id);
     }
 
     @GetMapping("/groups/{username}")
