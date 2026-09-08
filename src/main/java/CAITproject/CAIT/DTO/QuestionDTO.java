@@ -7,30 +7,39 @@ public class QuestionDTO {
     private int id;
     private String description;
     private String answer;
-    private String groupName;
+    private int groupId;
 
     public QuestionDTO() {
     }
 
-    public QuestionDTO(String description, String answer, String groupName) {
+    public QuestionDTO(String description, int groupId, String answer) {
         this.description = description;
+        this.groupId = groupId;
         this.answer = answer;
-        this.groupName = groupName;
     }
 
-    public QuestionDTO(int id, String description, String groupName, String answer) {
+    public QuestionDTO(String description, String answer, int groupId, int id) {
+        this.description = description;
+        this.answer = answer;
+        this.groupId = groupId;
         this.id = id;
-        this.description = description;
-        this.groupName = groupName;
-        this.answer = answer;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public QuestionDTO(Question question) {
+        this.description = question.getDescription();
+        this.answer = question.getAnswer();
+        this.groupId = question.getGroup().getId();
+        this.id = question.getId();
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public int getId() {
@@ -63,7 +72,7 @@ public class QuestionDTO {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", answer='" + answer + '\'' +
-                ", groupName='" + groupName + '\'' +
+                ", groupId=" + groupId +
                 '}';
     }
 }

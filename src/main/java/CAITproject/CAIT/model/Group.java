@@ -22,6 +22,9 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<Question> question = new ArrayList<>();
 
+    @OneToMany(mappedBy = "group")
+    private List<ImageQuestions> images = new ArrayList<>();
+
     public Group() {
     }
 
@@ -44,10 +47,19 @@ public class Group {
         this.user = user;
     }
 
+
     public Group(int id, List<Question> question, String name) {
         this.id = id;
         this.question = question;
         this.name = name;
+    }
+
+    public Group(List<ImageQuestions> images, List<Question> question, User user, String name, int id) {
+        this.images = images;
+        this.question = question;
+        this.user = user;
+        this.name = name;
+        this.id = id;
     }
 
     public int getId() {
@@ -82,12 +94,22 @@ public class Group {
         this.user = user;
     }
 
+    public List<ImageQuestions> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageQuestions> images) {
+        this.images = images;
+    }
+
     @Override
     public String toString() {
         return "Group{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", user=" + user.getUsername() +
+                ", user=" + user +
+                ", question=" + question +
+                ", images=" + images +
                 '}';
     }
 }

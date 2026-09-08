@@ -4,6 +4,7 @@ import CAITproject.CAIT.DTO.GroupDTO;
 import CAITproject.CAIT.model.Group;
 import CAITproject.CAIT.model.User;
 import CAITproject.CAIT.repo.GroupRepo;
+import CAITproject.CAIT.repo.QuestionRepo;
 import CAITproject.CAIT.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,9 @@ public class GroupService {
     @Autowired
     GroupRepo groupRepo;
 
+    @Autowired
+    QuestionRepo questionRepo;
+
     public void addingGroup(GroupDTO groupDTO){
 
 
@@ -33,6 +37,9 @@ public class GroupService {
     }
 
     public void deleting(int id){
+
+        questionRepo.deleteAllQuestionFromGroup(id);
+
         groupRepo.deleteById(id);
     }
 
