@@ -2,6 +2,8 @@ package CAITproject.CAIT.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class ImageQuestions {
 
@@ -9,6 +11,9 @@ public class ImageQuestions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String url_image;
+
+    @OneToMany(mappedBy = "image")
+    private List<Rectangle> rectangles;
 
     @ManyToOne
     @JoinColumn(name = "group_id")
