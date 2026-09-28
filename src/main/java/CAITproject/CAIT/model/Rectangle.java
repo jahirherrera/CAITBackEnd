@@ -1,6 +1,7 @@
 package CAITproject.CAIT.model;
 
 
+import CAITproject.CAIT.DTO.RectanglesDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -43,6 +44,14 @@ public class Rectangle {
         this.x = x;
         this.width = width;
         this.height = height;
+        this.image = image;
+    }
+
+    public Rectangle(RectanglesDTO rectanglesDTO,ImageQuestions image){
+        this.y = rectanglesDTO.getY();
+        this.x = rectanglesDTO.getX();
+        this.width = rectanglesDTO.getWidth();
+        this.height = rectanglesDTO.getHeight();
         this.image = image;
     }
 

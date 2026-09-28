@@ -1,7 +1,7 @@
 package CAITproject.CAIT.repo;
 
 import CAITproject.CAIT.model.ImageQuestions;
-import CAITproject.CAIT.model.Question;
+import CAITproject.CAIT.model.Rectangle;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,23 +12,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ImageRepo extends JpaRepository<ImageQuestions, Integer> {
+public interface RectangleRepo extends JpaRepository<Rectangle, Integer> {
 
     @Query(
             """
-            SELECT i
-            FROM ImageQuestions i
-            WHERE i.group.id = :id
+            SELECT r
+            FROM Rectangle r
+            WHERE r.image.id = :id
             """)
-    List<ImageQuestions> getImagesFromGroup(@Param("id") int id);
+    List<Rectangle> getRectanglesFromImage(@Param("id") int id);
 
     @Modifying
     @Transactional
     @Query(
             """
-            DELETE FROM ImageQuestions i
-            WHERE i.url_image = :url
+            DELETE FROM Rectangle r
+            WHERE r.image.id = :id
             """)
-    void deleteImageFromUrl(@Param("url") String url);
-
+    void deleteAllSquareFromImage(@Param("id") int id);
 }

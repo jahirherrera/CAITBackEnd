@@ -26,4 +26,16 @@ public class CloudinaryService {
 
         return result.get("secure_url").toString();
     }
+
+    public void deleteImage(String url)throws IOException{
+        String publicId = url.substring(url.lastIndexOf("/")+1);
+
+        publicId = publicId.substring(0,publicId.lastIndexOf("."));
+
+        cloudinary.uploader().destroy(publicId,ObjectUtils.asMap(
+                "resource_type", "image",
+                "type", "upload",
+                "invalidate", true
+        ));
+    }
 }

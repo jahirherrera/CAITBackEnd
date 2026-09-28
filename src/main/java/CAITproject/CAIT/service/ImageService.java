@@ -7,6 +7,7 @@ import CAITproject.CAIT.model.Group;
 import CAITproject.CAIT.model.ImageQuestions;
 import CAITproject.CAIT.repo.GroupRepo;
 import CAITproject.CAIT.repo.ImageRepo;
+import CAITproject.CAIT.repo.RectangleRepo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class ImageService {
     GroupRepo groupRepo;
 
     @Autowired
+    RectangleRepo rectangleRepo;
+
+    @Autowired
     private CloudinaryService cloudinaryService;
 
     public void uploadingImage(ImageDTO imageDTO) throws IOException {
@@ -37,5 +41,16 @@ public class ImageService {
 
     public List<ImageResponseDTO> getAllImagesFromGroup(int id){
         return imageRepo.getImagesFromGroup(id).stream().map(ImageResponseDTO::new).toList();
+    }
+
+    public void deleteImage(int id)throws IOException{
+
+        ImageQuestions image = imageRepo.findById(id).orElseThrow(()->new EntityNotFoundException("image cannot be found"));
+
+        cloudinaryService.deleteImage(image.getUrl_image());
+
+        rectangleRepo.deleteAllSquareFromImage(id);
+
+        imageRepo.deleteImageFromUrl(image.getUrl_image());
     }
 }
