@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class ImageQuestions {
+public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +19,15 @@ public class ImageQuestions {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    public ImageQuestions() {
+    public Image() {
     }
 
-    public ImageQuestions(String url_image, Group group) {
+    public Image(String url_image, Group group) {
         this.url_image = url_image;
         this.group = group;
     }
 
-    public ImageQuestions(int id, String url_image, Group group) {
+    public Image(int id, String url_image, Group group) {
         this.id = id;
         this.url_image = url_image;
         this.group = group;

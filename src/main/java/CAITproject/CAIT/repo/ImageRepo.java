@@ -1,7 +1,6 @@
 package CAITproject.CAIT.repo;
 
-import CAITproject.CAIT.model.ImageQuestions;
-import CAITproject.CAIT.model.Question;
+import CAITproject.CAIT.model.Image;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,21 +11,21 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ImageRepo extends JpaRepository<ImageQuestions, Integer> {
+public interface ImageRepo extends JpaRepository<Image, Integer> {
 
     @Query(
             """
             SELECT i
-            FROM ImageQuestions i
+            FROM Image i
             WHERE i.group.id = :id
             """)
-    List<ImageQuestions> getImagesFromGroup(@Param("id") int id);
+    List<Image> getImagesFromGroup(@Param("id") int id);
 
     @Modifying
     @Transactional
     @Query(
             """
-            DELETE FROM ImageQuestions i
+            DELETE FROM Image i
             WHERE i.url_image = :url
             """)
     void deleteImageFromUrl(@Param("url") String url);

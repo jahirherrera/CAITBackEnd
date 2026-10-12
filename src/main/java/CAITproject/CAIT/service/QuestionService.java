@@ -1,14 +1,20 @@
 package CAITproject.CAIT.service;
 
 
+import CAITproject.CAIT.DTO.AnswerDTO;
+import CAITproject.CAIT.DTO.QuestionAnswerDTO;
 import CAITproject.CAIT.DTO.QuestionDTO;
+import CAITproject.CAIT.DTO.QuestionResponseDTO;
+import CAITproject.CAIT.model.Answer;
 import CAITproject.CAIT.model.Group;
 import CAITproject.CAIT.model.Question;
+import CAITproject.CAIT.repo.AnswerRepo;
 import CAITproject.CAIT.repo.GroupRepo;
 import CAITproject.CAIT.repo.QuestionRepo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +29,31 @@ public class QuestionService {
     @Autowired
     GroupRepo groupRepo;
 
-    public void addingQuestion(QuestionDTO questionDTO){
+    @Autowired
+    AnswerRepo answerRepo;
 
 
-        Group group = groupRepo.findById(questionDTO.getGroupId()).orElseThrow(()->new EntityNotFoundException("Group couldn't be found"));
+    //this is adding the question with the answers
+    @Transactional
+    public void addingQuestion(QuestionResponseDTO q){
 
-        Question question = new Question(questionDTO.getDescription(),questionDTO.getAnswer(),group);
+
+        Group group = groupRepo.findById(q.groupId()).orElseThrow(()->new EntityNotFoundException("image cannot be found"));
+
+        Question question = new Question(q.explanation(),q.description(),0,true ,group);
 
         questionRepo.save(question);
 
+        Answer answer = new Answer(question,true,q.answer());
+
+        answerRepo.save(answer);
+
     }
 
-    public List<QuestionDTO> getQuestions(int id){
-        return questionRepo.getQuestionFromGroup(id).stream().map(QuestionDTO::new).toList();
+    public List<QuestionResponseDTO> getQuestions(int id){
+
+        return questionRepo.getQuestionFromGroup(id).stream().map(QuestionResponseDTO::new).toList();
+
     }
 
     public void deleteQuestion(int id){

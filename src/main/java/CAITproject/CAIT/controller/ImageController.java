@@ -2,7 +2,6 @@ package CAITproject.CAIT.controller;
 
 import CAITproject.CAIT.DTO.ImageDTO;
 import CAITproject.CAIT.DTO.ImageResponseDTO;
-import CAITproject.CAIT.DTO.RectanglesDTO;
 import CAITproject.CAIT.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

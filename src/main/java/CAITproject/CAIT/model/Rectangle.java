@@ -1,7 +1,8 @@
 package CAITproject.CAIT.model;
 
 
-import CAITproject.CAIT.DTO.RectanglesDTO;
+
+import CAITproject.CAIT.DTO.RectangleDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,7 +19,7 @@ public class Rectangle {
 
     @ManyToOne
     @JoinColumn(name = "image_id")
-    private ImageQuestions image;
+    private Image image;
 
     public Rectangle() {
     }
@@ -30,7 +31,7 @@ public class Rectangle {
         this.height = height;
     }
 
-    public Rectangle(int y, int x, int width, int height, ImageQuestions image) {
+    public Rectangle(int y, int x, int width, int height, Image image) {
         this.y = y;
         this.x = x;
         this.width = width;
@@ -38,7 +39,7 @@ public class Rectangle {
         this.image = image;
     }
 
-    public Rectangle(int id, int y, int x, int width, int height, ImageQuestions image) {
+    public Rectangle(int id, int y, int x, int width, int height, Image image) {
         this.id = id;
         this.y = y;
         this.x = x;
@@ -47,11 +48,11 @@ public class Rectangle {
         this.image = image;
     }
 
-    public Rectangle(RectanglesDTO rectanglesDTO,ImageQuestions image){
-        this.y = rectanglesDTO.getY();
-        this.x = rectanglesDTO.getX();
-        this.width = rectanglesDTO.getWidth();
-        this.height = rectanglesDTO.getHeight();
+    public Rectangle(RectangleDTO rectanglesDTO, Image image){
+        this.y = rectanglesDTO.y();
+        this.x = rectanglesDTO.x();
+        this.width = rectanglesDTO.width();
+        this.height = rectanglesDTO.height();
         this.image = image;
     }
 
@@ -63,11 +64,11 @@ public class Rectangle {
         this.id = id;
     }
 
-    public ImageQuestions getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(ImageQuestions image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

@@ -1,6 +1,5 @@
 package CAITproject.CAIT.repo;
 
-import CAITproject.CAIT.model.ImageQuestions;
 import CAITproject.CAIT.model.Rectangle;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

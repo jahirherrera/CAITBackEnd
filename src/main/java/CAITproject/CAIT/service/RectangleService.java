@@ -1,7 +1,7 @@
 package CAITproject.CAIT.service;
 
-import CAITproject.CAIT.DTO.RectanglesDTO;
-import CAITproject.CAIT.model.ImageQuestions;
+import CAITproject.CAIT.DTO.RectangleDTO;
+import CAITproject.CAIT.model.Image;
 import CAITproject.CAIT.model.Rectangle;
 import CAITproject.CAIT.repo.ImageRepo;
 import CAITproject.CAIT.repo.RectangleRepo;
@@ -21,19 +21,19 @@ public class RectangleService {
     @Autowired
     ImageRepo imageRepo;
 
-    public void saveRect(List<RectanglesDTO> rect){
+    public void saveRect(List<RectangleDTO> rect){
 
-        ImageQuestions image = imageRepo.findById(rect.getFirst().getId_image()).orElseThrow(()->new EntityNotFoundException("Group couldn't be found"));
+        Image image = imageRepo.findById(rect.getFirst().imageId()).orElseThrow(()->new EntityNotFoundException("Group couldn't be found"));
 
-        for(RectanglesDTO rectangles : rect){
+        for(RectangleDTO rectangles : rect){
             rectangleRepo.save(new Rectangle(rectangles,image));
         }
     }
 
-    public List<RectanglesDTO> getRectanglesFromImage(int id){
+    public List<RectangleDTO> getRectanglesFromImage(int id){
         List<Rectangle> rectangles = rectangleRepo.getRectanglesFromImage(id);
 
-        return rectangles.stream().map(RectanglesDTO::new).toList();
+        return rectangles.stream().map(RectangleDTO::new).toList();
     }
 
     public void deleteById(int id){

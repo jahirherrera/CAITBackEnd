@@ -27,9 +27,9 @@ public class GroupService {
     public void addingGroup(GroupDTO groupDTO){
 
 
-        User user = userRepo.findByUsername(groupDTO.getUser_username());
+        User user = userRepo.findByUsername(groupDTO.username());
 
-        Group group = new Group(groupDTO.getName(), user );
+        Group group = new Group(groupDTO.name(), user );
 
         groupRepo.save(group);
 
@@ -47,7 +47,7 @@ public class GroupService {
         User user = userRepo.findByUsername(username);
 
         if(user != null) {
-            return user.getGroup().stream().map(GroupDTO::new).toList();
+            return user.getGroup().stream().map(group -> new GroupDTO(group.getId(), group.getName(), group.getNextReview(),group.getUser().getUsername())).toList();
         }else{
             throw new UsernameNotFoundException("user not found so sad");
         }

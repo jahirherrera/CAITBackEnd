@@ -2,9 +2,8 @@ package CAITproject.CAIT.service;
 
 import CAITproject.CAIT.DTO.ImageDTO;
 import CAITproject.CAIT.DTO.ImageResponseDTO;
-import CAITproject.CAIT.DTO.QuestionDTO;
 import CAITproject.CAIT.model.Group;
-import CAITproject.CAIT.model.ImageQuestions;
+import CAITproject.CAIT.model.Image;
 import CAITproject.CAIT.repo.GroupRepo;
 import CAITproject.CAIT.repo.ImageRepo;
 import CAITproject.CAIT.repo.RectangleRepo;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ImageService {
@@ -32,20 +30,20 @@ public class ImageService {
     private CloudinaryService cloudinaryService;
 
     public void uploadingImage(ImageDTO imageDTO) throws IOException {
-        String url = cloudinaryService.uploadImage(imageDTO.getFile());
+        String url = cloudinaryService.uploadImage(imageDTO.file());
 
-        Group group = groupRepo.findById(imageDTO.getGroupId()).orElseThrow(()->new EntityNotFoundException("Group couldn't be found"));
+        Group group = groupRepo.findById(imageDTO.groupId()).orElseThrow(()->new EntityNotFoundException("Group couldn't be found"));
 
-        imageRepo.save(new ImageQuestions(url,group));
+        imageRepo.save(new Image(url,group));
     }
 
     public List<ImageResponseDTO> getAllImagesFromGroup(int id){
-        return imageRepo.getImagesFromGroup(id).stream().map(ImageResponseDTO::new).toList();
+        return imageRepo.getImagesFromGroup(id).stream().map(image -> new ImageResponseDTO(image.getId(), image.getUrl_image(), image.getGroup().getId())).toList();
     }
 
     public void deleteImage(int id)throws IOException{
 
-        ImageQuestions image = imageRepo.findById(id).orElseThrow(()->new EntityNotFoundException("image cannot be found"));
+        Image image = imageRepo.findById(id).orElseThrow(()->new EntityNotFoundException("image cannot be found"));
 
         cloudinaryService.deleteImage(image.getUrl_image());
 

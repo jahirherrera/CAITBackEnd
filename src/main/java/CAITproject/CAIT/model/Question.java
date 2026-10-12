@@ -1,6 +1,10 @@
 package CAITproject.CAIT.model;
 
+import CAITproject.CAIT.DTO.QuestionDTO;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Question {
@@ -10,8 +14,12 @@ public class Question {
     private int id;
 
     private String description;
-    private String answer;
+    private String explanation;
+    private int points;
+    private boolean isEnable;
 
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "group_id")
@@ -21,17 +29,31 @@ public class Question {
     public Question() {
     }
 
-    public Question(String description, String answer, Group group) {
+    public Question(String explanation, String description, int points, boolean isEnable, Group group) {
+        this.explanation = explanation;
         this.description = description;
-        this.answer = answer;
+        this.points = points;
+        this.isEnable = isEnable;
         this.group = group;
     }
 
-    public Question(int id, Group group, String answer, String description) {
+    public Question(int id, String description, String explanation, int points, List<Answer> answers, boolean isEnable, Group group) {
         this.id = id;
-        this.group = group;
-        this.answer = answer;
         this.description = description;
+        this.explanation = explanation;
+        this.points = points;
+        this.answers = answers;
+        this.isEnable = isEnable;
+        this.group = group;
+    }
+
+    public Question(QuestionDTO questionDTO,Group group) {
+        this.description = questionDTO.description();
+        this.explanation = questionDTO.explanation();
+        this.points = questionDTO.points();
+        this.isEnable = questionDTO.isEnable();
+        this.group = group;
+        this.id = questionDTO.id();
     }
 
     public int getId() {
@@ -42,12 +64,36 @@ public class Question {
         this.id = id;
     }
 
-    public String getAnswer() {
-        return answer;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 
     public String getDescription() {
@@ -58,21 +104,11 @@ public class Question {
         this.description = description;
     }
 
-    public Group getGroup() {
-        return group;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", answer='" + answer + '\'' +
-                ", group=" + group +
-                '}';
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }

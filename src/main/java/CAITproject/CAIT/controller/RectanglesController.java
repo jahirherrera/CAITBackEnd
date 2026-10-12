@@ -1,7 +1,6 @@
 package CAITproject.CAIT.controller;
 
-
-import CAITproject.CAIT.DTO.RectanglesDTO;
+import CAITproject.CAIT.DTO.RectangleDTO;
 import CAITproject.CAIT.service.RectangleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +14,14 @@ public class RectanglesController {
     RectangleService rectangleService;
 
     @PostMapping("/rectangle")
-    public void saveRectangle(@RequestBody List<RectanglesDTO> rectangles){
+    public void saveRectangle(@RequestBody List<RectangleDTO> rectangles){
         if(rectangles==null) return;
 
         rectangleService.saveRect(rectangles);
     }
 
     @GetMapping("/rectangle/{id_image}")
-    public List<RectanglesDTO> getRectanglesFromImage(@PathVariable("id_image")int id){
+    public List<RectangleDTO> getRectanglesFromImage(@PathVariable("id_image")int id){
         return rectangleService.getRectanglesFromImage(id);
     }
 
