@@ -19,6 +19,8 @@ public class Image {
     @JoinColumn(name = "group_id")
     private Group group;
 
+    private int points;
+
     public Image() {
     }
 
@@ -55,6 +57,22 @@ public class Image {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public List<Rectangle> getRectangles() {
+        return rectangles;
+    }
+
+    public void setRectangles(List<Rectangle> rectangles) {
+        this.rectangles = rectangles;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     @Override

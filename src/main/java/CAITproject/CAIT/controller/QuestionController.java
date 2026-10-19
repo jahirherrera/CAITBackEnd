@@ -18,7 +18,7 @@ public class QuestionController {
     QuestionService questionService;
 
     @PostMapping("/addQuestion")
-    public void addingQuestion(@RequestBody QuestionResponseDTO question){
+    public void addingQuestion(@RequestBody QuestionAnswerDTO question){
         questionService.addingQuestion(question);
     }
 
@@ -31,4 +31,11 @@ public class QuestionController {
     public List<QuestionResponseDTO> getQues(@PathVariable("id")int id){
         return questionService.getQuestions(id);
     }
+
+    @GetMapping("/getQuestionsTest/{id}")
+    public List<QuestionAnswerDTO> getQuestionTest(@PathVariable("id")int id){
+        return questionService.getQuestionsTest(id);
+    }
+
+
 }

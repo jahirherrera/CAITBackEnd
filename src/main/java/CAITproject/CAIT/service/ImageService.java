@@ -2,6 +2,8 @@ package CAITproject.CAIT.service;
 
 import CAITproject.CAIT.DTO.ImageDTO;
 import CAITproject.CAIT.DTO.ImageResponseDTO;
+import CAITproject.CAIT.DTO.ImageSquaresDTO;
+import CAITproject.CAIT.DTO.RectangleDTO;
 import CAITproject.CAIT.model.Group;
 import CAITproject.CAIT.model.Image;
 import CAITproject.CAIT.repo.GroupRepo;
@@ -38,7 +40,7 @@ public class ImageService {
     }
 
     public List<ImageResponseDTO> getAllImagesFromGroup(int id){
-        return imageRepo.getImagesFromGroup(id).stream().map(image -> new ImageResponseDTO(image.getId(), image.getUrl_image(), image.getGroup().getId())).toList();
+        return imageRepo.getImagesFromGroup(id).stream().map(image -> new ImageResponseDTO(image.getId(), image.getUrl_image(), image.getPoints(), image.getGroup().getId())).toList();
     }
 
     public void deleteImage(int id)throws IOException{
@@ -50,5 +52,11 @@ public class ImageService {
         rectangleRepo.deleteAllSquareFromImage(id);
 
         imageRepo.deleteImageFromUrl(image.getUrl_image());
+    }
+
+    public List<ImageSquaresDTO> imageSquares(int groupId) {
+
+        return imageRepo.getImagesFromGroup(groupId).stream().map(ImageSquaresDTO::new).toList();
+
     }
 }

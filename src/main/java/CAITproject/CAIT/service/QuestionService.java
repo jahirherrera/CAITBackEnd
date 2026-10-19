@@ -35,18 +35,20 @@ public class QuestionService {
 
     //this is adding the question with the answers
     @Transactional
-    public void addingQuestion(QuestionResponseDTO q){
+    public void addingQuestion(QuestionAnswerDTO q){
 
 
         Group group = groupRepo.findById(q.groupId()).orElseThrow(()->new EntityNotFoundException("image cannot be found"));
 
-        Question question = new Question(q.explanation(),q.description(),0,true ,group);
+        Question question = new Question(q.questionDTO().explanation(),q.questionDTO().description(),0,true ,group);
 
         questionRepo.save(question);
 
-        Answer answer = new Answer(question,true,q.answer());
+        for(AnswerDTO answers : q.answerDTO()){
+            Answer answer = new Answer(question,answers.isCorrect(),answers.description());
 
-        answerRepo.save(answer);
+            answerRepo.save(answer);
+        }
 
     }
 
@@ -56,7 +58,17 @@ public class QuestionService {
 
     }
 
+    @Transactional
     public void deleteQuestion(int id){
+
+        answerRepo.deleteAllAnswerFromQuestion(id);
+
         questionRepo.deleteById(id);
+    }
+
+    public List<QuestionAnswerDTO> getQuestionsTest(int id) {
+        List<Question> questions = questionRepo.getQuestionFromGroup(id);
+
+        return questions.stream().map(question -> new QuestionAnswerDTO(id,new QuestionDTO(question),question.getAnswers().stream().map(AnswerDTO::new).toList())).toList();
     }
 }

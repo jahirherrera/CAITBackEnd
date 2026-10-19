@@ -2,6 +2,7 @@ package CAITproject.CAIT.controller;
 
 import CAITproject.CAIT.DTO.ImageDTO;
 import CAITproject.CAIT.DTO.ImageResponseDTO;
+import CAITproject.CAIT.DTO.ImageSquaresDTO;
 import CAITproject.CAIT.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,11 @@ public class ImageController {
     @PostMapping("/image")
     public void uploadingImage(@ModelAttribute ImageDTO imageDTO) throws IOException {
         imageService.uploadingImage(imageDTO);
+    }
+
+    @GetMapping("/imageRectangle/{groupId}")
+    public List<ImageSquaresDTO> getImagesSquares(@PathVariable("groupId") int groupId){
+        return imageService.imageSquares(groupId);
     }
 
     @GetMapping("/image/{groupId}")
